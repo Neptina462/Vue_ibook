@@ -42,6 +42,7 @@ export default {
             loginForm: {
                 username: '',
                 password: '',
+                usernum: '',
             },
             //  身份数据
             userType: true,
@@ -82,7 +83,19 @@ export default {
                 .then(response => {
                     console.log(response);
                     this.$message.success('登录成功');
-                    if (this.loginType)
+                    //response更新内容
+
+                    //设置session
+                    if (this.userType)
+                        window.sessionStorage.setItem('usertype', 'student');
+                    else 
+                        window.sessionStorage.setItem('usertype', 'admin');
+                    window.sessionStorage.setItem('username', this.loginForm.username);
+                    //window.sessionStorage.setItem('password', this.loginForm.password);
+                    window.sessionStorage.setItem('usernum', this.loginForm.usernum);
+                    
+                    //页面跳转
+                    if (this.userType)
                         this.$router.push('/studentHome');
                     else
                         this.$router.push('/adminHome');
@@ -90,6 +103,22 @@ export default {
                 .catch( error => {
                     console.log(error);
                     this.$message.error('登录失败');
+                    console.log(this.userType);
+                    //设置session
+                    if (this.userType)
+                        window.sessionStorage.setItem('usertype', 'student');
+                    else 
+                        window.sessionStorage.setItem('usertype', 'admin');
+                    window.sessionStorage.setItem('username', this.loginForm.username);
+                    //window.sessionStorage.setItem('password', this.loginForm.password);
+                    window.sessionStorage.setItem('usernum', this.loginForm.usernum);
+
+                    //页面跳转
+                    if (this.userType)
+                        this.$router.push('/studentHome');
+                    else
+                        this.$router.push('/adminHome');
+
                     });
             });
         },
